@@ -1,7 +1,12 @@
 # Example file showing a basic pygame "game loop"
 import pygame
 from datetime import datetime
+import pytz
 
+
+print("Loading timezone...")
+timezonetext = open('timezone.txt', 'rt').read().strip()
+timezone = pytz.timezone(timezonetext)
 # getting the current date and time
 current_datetime = datetime.now()
 # pygame setup
@@ -27,7 +32,7 @@ while running:
 
     current_datetime = datetime.now()
     # Create the text surface
-    text_surface = font.render(str(current_datetime.strftime("%m/%d/%Y, %H:%M:%S")), True, (255, 255, 255))  # white text
+    text_surface = font.render(str(timezone.localize(current_datetime).strftime("%m/%d/%Y, %I:%M:%S %p")), True, (255, 255, 255))  # white text
 
     # Position to display the text
     text_rect = text_surface.get_rect(center=(400, 300))  # center the text
